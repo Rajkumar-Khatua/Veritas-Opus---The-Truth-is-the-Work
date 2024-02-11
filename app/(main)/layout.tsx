@@ -5,7 +5,7 @@ import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 import Navigation from "./_components/Navigation";
 
-const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useConvexAuth();
 
   // If user is not authenticated and still loading, show a spinner
@@ -30,4 +30,4 @@ const MarketingLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default MarketingLayout;
+export default MainLayout;
