@@ -1,12 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/clerk-react";
+import { useMutation } from "convex/react";
 import { PlusCircleIcon } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 const DocumentsPage = () => {
   const { user } = useUser();
+  const create = useMutation(api.documents.create);
+
+  const onCreate = () => {
+    const promise = create({ title: "Untitled Document" });
+    toast.promise(promise, {
+      loading: "Creating new document...",
+      success: "Document created successfully",
+      error: "Failed to create document",
+    });
+  };
+
   return (
     <div
       className="
@@ -43,7 +57,7 @@ const DocumentsPage = () => {
       >
         Hey dear welcome to {user?.firstName}&apos;s Veritas Opus
       </h2>
-      <Button>
+      <Button onClick={onCreate}>
         <PlusCircleIcon className="h-4 w-4 mr-2" />
         Create a new document
       </Button>
