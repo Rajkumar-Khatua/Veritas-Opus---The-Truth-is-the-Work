@@ -27,6 +27,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { TrashBox } from "./TrashBox";
+import { useSearch } from "@/hooks/use-search";
 
 const Navigation = () => {
   const pathName = usePathname();
@@ -38,6 +39,8 @@ const Navigation = () => {
   const navbarRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+  const search = useSearch();
 
   // Update isCollapsed when isMobile changes
   useEffect(() => {
@@ -151,7 +154,7 @@ const Navigation = () => {
         </div>
         <div>
           <UserItems />
-          <Item label="Search" icon={Search} isSearch onClick={() => {}} />
+          <Item label="Search" icon={Search} isSearch onClick={search.onOpen} />
           <Item label="Settings" icon={Settings2} onClick={() => {}} />
           <Item onClick={handleCreate} label="new Page" icon={PlusCircle} />
         </div>
