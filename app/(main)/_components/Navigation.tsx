@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import {
   ChevronsLeft,
+  Home,
   MenuIcon,
   MenuSquareIcon,
   PlusCircle,
@@ -12,7 +13,7 @@ import {
   Settings2,
   Trash,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserItems from "./UserItems";
@@ -28,6 +29,7 @@ import {
 } from "@/components/ui/popover";
 import { TrashBox } from "./TrashBox";
 import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
 
 const Navigation = () => {
   const pathName = usePathname();
@@ -41,6 +43,9 @@ const Navigation = () => {
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
   const search = useSearch();
+  const settings = useSettings();
+
+  const router = useRouter();
 
   // Update isCollapsed when isMobile changes
   useEffect(() => {
@@ -155,7 +160,8 @@ const Navigation = () => {
         <div>
           <UserItems />
           <Item label="Search" icon={Search} isSearch onClick={search.onOpen} />
-          <Item label="Settings" icon={Settings2} onClick={() => {}} />
+          <Item label="Settings" icon={Settings2} onClick={settings.onOpen} />
+          <Item label="Home" icon={Home} onClick={() => router.push("/")} />
           <Item onClick={handleCreate} label="new Page" icon={PlusCircle} />
         </div>
         <div className="mt-4">
