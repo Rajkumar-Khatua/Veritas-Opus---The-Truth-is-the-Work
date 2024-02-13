@@ -113,6 +113,8 @@ export const getTrash = query({
       .filter((q) => q.eq(q.field("isArchived"), true))
       .order("desc")
       .collect();
+
+    return documents;
   },
 });
 
@@ -123,7 +125,7 @@ export const restore = mutation({
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
-      throw new Error("Not Authorized");
+      throw new Error("Not authenticated");
     }
 
     const userId = identity.subject;
@@ -131,10 +133,11 @@ export const restore = mutation({
     const existingDocument = await ctx.db.get(args.id);
 
     if (!existingDocument) {
-      throw new Error("Not found!");
+      throw new Error("Not found");
     }
+
     if (existingDocument.userId !== userId) {
-      throw new Error("UnAuthorized!");
+      throw new Error("Unauthorized");
     }
 
     const recursiveRestore = async (documentId: Id<"documents">) => {
@@ -149,6 +152,7 @@ export const restore = mutation({
         await ctx.db.patch(child._id, {
           isArchived: false,
         });
+
         await recursiveRestore(child._id);
       }
     };
@@ -156,6 +160,7 @@ export const restore = mutation({
     const options: Partial<Doc<"documents">> = {
       isArchived: false,
     };
+
     if (existingDocument.parentDocument) {
       const parent = await ctx.db.get(existingDocument.parentDocument);
       if (parent?.isArchived) {
