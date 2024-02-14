@@ -6,7 +6,7 @@ import { useQuery } from "convex/react";
 import { MenuIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 import { Title } from "./Title";
-import { Banner } from "./Banner";
+import { Banner } from "../../../components/Banner";
 import { Menu } from "./Menu";
 
 interface NavbarProps {
