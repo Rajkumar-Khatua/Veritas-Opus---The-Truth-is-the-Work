@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { SettingsModel } from "../models/settings-model";
+import { CoverImageModel } from "../models/cover-image-model";
 
 export const ModelProvider = () => {
   const [mounted, setMounted] = useState(false);
@@ -15,6 +16,7 @@ export const ModelProvider = () => {
   return (
     <>
       <SettingsModel />
+      <CoverImageModel />
     </>
   );
 };
