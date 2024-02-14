@@ -45,7 +45,7 @@ export default function RootLayout({
             storageKey="veritas-opus"
             themes={["light", "dark", "system"]}
           >
-            <Toaster position="bottom-center" />
+            <Toaster position="bottom-left" />
             <ModelProvider />
             {children}
           </ThemeProvider>
