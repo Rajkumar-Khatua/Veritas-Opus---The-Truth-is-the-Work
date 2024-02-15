@@ -224,21 +224,22 @@ export const getSearch = query({
 
 // This function is for get the document by id
 export const getById = query({
-  args: {
-    documentId: v.id("documents"),
-  },
+  args: { documentId: v.id("documents") },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
 
-    if (!identity) {
-      throw new Error("Not Authorized");
-    }
     const document = await ctx.db.get(args.documentId);
+
     if (!document) {
-      throw new Error("Document not found!");
+      throw new Error("Not found");
     }
+
     if (document.isPublished && !document.isArchived) {
       return document;
+    }
+
+    if (!identity) {
+      throw new Error("Not authenticated");
     }
 
     const userId = identity.subject;
@@ -246,6 +247,7 @@ export const getById = query({
     if (document.userId !== userId) {
       throw new Error("Unauthorized");
     }
+
     return document;
   },
 });
