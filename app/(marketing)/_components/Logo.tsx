@@ -18,14 +18,14 @@ const Logo = () => {
     "
     >
       <Image
-        src="/logo.svg"
+        src="/logo.png"
         alt="Veritas Opus"
         width={40}
         height={40}
         className="dark:hidden"
       />
       <Image
-        src="/logo-dark.svg"
+        src="/logo.png"
         alt="Veritas Opus"
         width={40}
         height={40}
